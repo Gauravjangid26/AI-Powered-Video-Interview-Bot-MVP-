@@ -36,25 +36,7 @@ Recruiters receive structured summaries and skill assessments, allowing them to 
 
 ## 📦 Folder Structure
 
-mvp/ ├── main.py # Streamlit app
-     ├── requirements.txt # Python dependencies 
-     ├── readme.md # Project documentation 
-     ├── doc.txt # Additional notes 
-     ├── pyproject.toml # Optional project metadata 
-     ├── uv.lock # Environment lock file 
-     ├── data/ 
-     │ └── submissions.json # Stored candidate reports 
-     ├── templates/ 
-     │ └── recorder.html # Browser-based video recorder 
-     ├── tts_output/ 
-     │ └── *.mp3 # Generated greeting audio files 
-     ├── utils/ 
-     │    ├── llm.py # LLM prompt logic 
-     │    ├── stt.py # Speech-to-text transcription 
-     │    ├── tts.py # Text-to-speech generation 
-     │    └── video_audio_recorder.py # (Optional) Recorder utilities 
-     └── pycache/ # Compiled Python cache
-
+mvp/ ├── main.py # Streamlit app ├── requirements.txt # Python dependencies ├── readme.md # Project documentation ├── doc.txt # Additional notes ├── pyproject.toml # Optional project metadata ├── uv.lock # Environment lock file ├── data/ │ └── submissions.json # Stored candidate reports ├── templates/ │ └── recorder.html # Browser-based video recorder ├── tts_output/ │ └── *.mp3 # Generated greeting audio files ├── utils/ │ ├── llm.py # LLM prompt logic │ ├── stt.py # Speech-to-text transcription │ ├── tts.py # Text-to-speech generation │ └── video_audio_recorder.py # (Optional) Recorder utilities └── pycache/ # Compiled Python cache
 
 ---
 
