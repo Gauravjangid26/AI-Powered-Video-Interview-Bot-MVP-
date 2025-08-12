@@ -7,7 +7,6 @@ SpeechRecognition
 gtts
 pyaudio
 whisper
-pydub
 numpy
 torch
 openai
