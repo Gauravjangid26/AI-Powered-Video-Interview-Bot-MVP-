@@ -73,7 +73,7 @@ pip install -r requirements.txt
 streamlit run main.py
 
 
-📋 Recruiter Dashboard
+### Recruiter Dashboard
 Accessible within the app:
 
 View candidate name, role, and summary
