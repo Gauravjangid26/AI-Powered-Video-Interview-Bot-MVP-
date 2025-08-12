@@ -4,7 +4,7 @@ ffmpeg-python
 langchain-google-genai
 python-dotenv
 gtts
-openai-whisper
+git+https://github.com/openai/whisper.git
 numpy
 torch
 openai
