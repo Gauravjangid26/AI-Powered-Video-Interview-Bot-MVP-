@@ -1,45 +1,61 @@
-import subprocess
 import os
+import subprocess
 import whisper
 import warnings
-warnings.filterwarnings("ignore", message=".*FP16 is not supported on CPU.*")
+import logging
 
-def transcribe_webm_with_whisper_local(webm_file, output_dir="temp_audio"):
-    # Ensure output directory exists
+warnings.filterwarnings("ignore", message=".*FP16 is not supported on CPU.*")
+logging.basicConfig(level=logging.INFO)
+
+def transcribe_webm_with_whisper_local(webm_file, output_dir="temp_audio", model_size="base", cleanup=True) -> str:
+    """
+    Transcribes a .webm file using Whisper locally.
+
+    Args:
+        webm_file: Uploaded file-like object (e.g., from Streamlit).
+        output_dir (str): Directory to store temporary audio files.
+        model_size (str): Whisper model size ("tiny", "base", "small", "medium", "large").
+        cleanup (bool): Whether to delete temp files after transcription.
+
+    Returns:
+        str: Transcribed text.
+    """
     os.makedirs(output_dir, exist_ok=True)
 
-    # Save uploaded webm file locally
+    # Save uploaded file
     input_path = os.path.join(output_dir, webm_file.name)
     with open(input_path, "wb") as f:
         f.write(webm_file.read())
 
-    # Define output mp3 path
+    # Convert to mp3
     output_path = input_path.replace(".webm", ".mp3")
-
-    # Extract audio using ffmpeg
-    command = [
-        "ffmpeg",
-        "-i", input_path,
-        "-vn",
-        "-acodec", "libmp3lame",
+    ffmpeg_cmd = [
+        "ffmpeg", "-i", input_path,
+        "-vn", "-acodec", "libmp3lame",
         output_path
     ]
-    subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        subprocess.run(ffmpeg_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+    except subprocess.CalledProcessError as e:
+        logging.error(f"FFmpeg conversion failed: {e}")
+        return ""
 
     # Load Whisper model
-    model = whisper.load_model("base")  # You can use "tiny", "small", "medium", "large"
+    try:
+        model = whisper.load_model(model_size)
+        result = model.transcribe(output_path)
+        transcript = result.get("text", "")
+        logging.info(f"Transcription complete: {transcript[:60]}...")
+    except Exception as e:
+        logging.error(f"Whisper transcription failed: {e}")
+        transcript = ""
 
-    # Transcribe audio
-    result = model.transcribe(output_path)
+    # Clean up
+    if cleanup:
+        for path in [input_path, output_path]:
+            try:
+                os.remove(path)
+            except OSError:
+                logging.warning(f"Failed to delete temp file: {path}")
 
-    # Optional: Clean up temp files
-    os.remove(input_path)
-    os.remove(output_path)
-    print(result['text'])
-
-    return result['text']
-
-
-#model = whisper.load_model("base",device='cpu') 
-#result = model.transcribe("/Users/gauravjangid/Desktop/mvp/temp_audio/response-5.mp3")
-#print(result['text'])
+    return transcript
