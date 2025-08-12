@@ -6,6 +6,7 @@ from utils.tts import text_to_speech
 import json
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(page_title="AI Video Interview Bot", layout="centered")
 st.title("🎤 AI-Powered Video Interview Bot")
@@ -33,7 +34,9 @@ if "questions" in st.session_state:
         st.subheader(f"❓ Question {st.session_state.current_q + 1}")
         st.markdown(st.session_state.questions[st.session_state.current_q])
         st.markdown("Record your response below and download it before continuing.")
-        components.html(open("/Users/gauravjangid/Desktop/mvp/templates/recorder.html").read(), height=600)
+        template_path = os.path.join(BASE_DIR, "templates", "recorder.html")
+        with open(template_path, "r") as f:
+            components.html(f.read(), height=600)
 
         if st.button("Next Question"):
             st.session_state.current_q += 1
@@ -55,7 +58,7 @@ if "questions" in st.session_state:
         
        
 
-        # After displaying the summary
+        # After the summary
             if summary:
                 candidate_data = {
                     "name": name,
