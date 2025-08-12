@@ -3,7 +3,6 @@ streamlit-webrtc
 ffmpeg-python
 langchain-google-genai
 python-dotenv
-SpeechRecognition
 gtts
 whisper
 numpy
