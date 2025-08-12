@@ -24,14 +24,14 @@ Recruiters receive structured summaries and skill assessments, allowing them to 
 
 ## 🧰 Tech Stack
 
-| Layer            | Technology Used                    |
-|------------------|-------------------------------------|
-| Frontend         | Streamlit + HTML (MediaRecorder)    |
-| Backend Logic    | Python                              |
-| AI Models        | OpenAI GPT-4 (LLM), Whisper (STT)    |
-| Storage          | Local JSON (`data/submissions.json`)|
-| TTS (Optional)   | gTTS for greeting audio             |
-
+| Layer            | Technology Used                      |
+|------------------|--------------------------------------|
+| Frontend         | Streamlit + HTML (MediaRecorder)     |
+| Backend Logic    | Python                               |
+| AI Models        | gemini-1.5-flash(LLM), Whisper (STT) |
+| Storage          | Local JSON (`data/submissions.json` )|
+| TTS              | gTTS for greeting audio              |
+| STT              | whisper                              |
 ---
 
 ## 📦 Folder Structure
