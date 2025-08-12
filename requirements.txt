@@ -1,11 +1,13 @@
 streamlit
 streamlit-webrtc
-ffmpeg-python==0.2.0
+ffmpeg-python
 langchain-google-genai
 python-dotenv
 SpeechRecognition
 gtts
-werkzeug
-flask
-opencv-python
 pyaudio
+whisper
+pydub
+numpy
+torch
+openai
