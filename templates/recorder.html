@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video Recorder</title>
+</head>
+<body>
+  <video id="preview" autoplay muted playsinline style="width: 100%;"></video>
+  <br>
+  <button id="startBtn">Start Recording</button>
+  <button id="stopBtn" disabled>Stop Recording</button>
+  <p id="timer">Recording Time: 0s</p>
+
+  <script>
+    let mediaRecorder;
+    let recordedChunks = [];
+    let timerInterval;
+    let seconds = 0;
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        const preview = document.getElementById('preview');
+        preview.srcObject = stream;
+
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = event => {
+          if (event.data.size > 0) {
+            recordedChunks.push(event.data);
+          }
+        };
+
+        mediaRecorder.onstop = () => {
+          clearInterval(timerInterval);
+          document.getElementById('timer').textContent = 'Recording Time: 0s';
+
+          const blob = new Blob(recordedChunks, { type: 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'response.webm';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        };
+
+        document.getElementById('startBtn').onclick = () => {
+          recordedChunks = [];
+          mediaRecorder.start();
+          seconds = 0;
+          document.getElementById('timer').textContent = 'Recording Time: 0s';
+          timerInterval = setInterval(() => {
+            seconds++;
+            document.getElementById('timer').textContent = `Recording Time: ${seconds}s`;
+          }, 1000);
+          document.getElementById('startBtn').disabled = true;
+          document.getElementById('stopBtn').disabled = false;
+        };
+
+        document.getElementById('stopBtn').onclick = () => {
+          mediaRecorder.stop();
+          document.getElementById('startBtn').disabled = false;
+          document.getElementById('stopBtn').disabled = true;
+        };
+      })
+      .catch(error => {
+        alert('Error accessing media devices: ' + error);
+      });
+  </script>
+</body>
+</html>

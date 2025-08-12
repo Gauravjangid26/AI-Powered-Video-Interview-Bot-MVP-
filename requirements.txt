@@ -1,0 +1,11 @@
+streamlit
+streamlit-webrtc
+ffmpeg-python==0.2.0
+langchain-google-genai
+python-dotenv
+SpeechRecognition
+gtts
+werkzeug
+flask
+opencv-python
+pyaudio
