@@ -42,37 +42,22 @@ mvp/ ├── main.py # Streamlit app ├── requirements.txt # Python depen
 
 ## 🧪 Setup Instructions
 
-### 1. Clone the Repository
+### Clone the Repository
 
-```bash
 git clone https://github.com/your-username/interview-bot-mvp.git
 cd interview-bot-mvp
 
- 2. Install Dependencies
-bash
+insert api key of google in
+.env
+
+make a virtual environment
+python -m venv venv
+source venv/bin/activate 
+
+Install Dependencies
 pip install -r requirements.txt
- 3. Run the App
+
+ Run the App
 streamlit run main.py
 
 
-### Recruiter Dashboard
-Accessible within the app:
-
-View candidate name, role, and summary
-
-Expand to view full transcript
-
-Filter by role title
-
-Candidate reports are saved in:
-
-data/submissions.json
-Each entry includes:
-
-name: Candidate name
-
-role: Role title
-
-transcript: Full transcribed responses
-
-summary: AI-generated evaluation
